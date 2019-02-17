@@ -1,5 +1,6 @@
 import protoCore from "./protoCore/protoCore.js";
 import Rectangle from "./protoCore/canvas/rectangle.js";
+import SpriteParent from "./protoCore/canvas/SpriteParent.js";
 
 let options = {
     setup: setup,
@@ -10,6 +11,7 @@ let options = {
 
 let r;
 let socket;
+let sp;
 
 function setup(canvas, ctx){
     socket = io();
@@ -18,6 +20,15 @@ function setup(canvas, ctx){
     r.setFillStyle("Blue");
     r.showBounds();
     r.fill = true;
+
+    r = new Rectangle(ctx, -100, 100, 100, 100);
+    r.setAnchor(50, 50);
+    r.setFillStyle("Blue");
+    r.showBounds();
+    r.fill = true;
+
+    sp = new SpriteParent(500, 500);
+    sp.addChild(r);
 
 }
 
@@ -30,7 +41,7 @@ function update(canvas, ctx) {
 
     }
 
-
+    sp.translateY(1);
 }
 
 function keyupdate(){
