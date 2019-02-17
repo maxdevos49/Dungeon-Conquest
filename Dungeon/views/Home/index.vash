@@ -1,0 +1,14 @@
+@html.extend('Shared/_layout', function(model){
+
+    @html.block('content', function(model){
+
+        @{
+            model.title = "Index";
+        }
+        
+        <div class="container col-md-6" style="margin: 100px auto 100px auto;">
+            <h3 class="text" style="text-align: center;">Index Home</h3>
+        </div>
+
+    })
+})

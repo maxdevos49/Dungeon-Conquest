@@ -1,0 +1,22 @@
+@html.extend('Shared/_layout', function(model){
+
+    @html.block('content', function(model){
+
+        @{
+            model.title = "Dungeon Conquest";
+        }
+        
+        <div class="container col-md-12" style="margin: 10px auto">
+
+            <div class="col-md-10">
+                <canvas id="canvas" style="width: 100%;border: 1px solid black;"></canvas>
+            </div>
+
+        </div>
+
+         <!-- Scripts -->
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="module" src="/javascript/dungeon.js"></script>
+
+    })
+})
