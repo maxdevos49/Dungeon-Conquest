@@ -1,6 +1,7 @@
 module.exports = {
     name: "Dungeon",
     owner: "Maxon ",
+    version: "0.0.1",
     Developers: ["Maxwell DeVos", "Mason Timmerman"],
     server: {
         production: process.env.PRODUCTION,
