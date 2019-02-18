@@ -26,7 +26,8 @@ function setup(canvas, ctx){
     r.showBounds();
     r.fill = true;
 
-    tm = new TileMap(ctx, player.map, 50, 100, 100);
+    console.log(player.map);
+    tm = new TileMap(ctx, player.map, 50, 10, 10);
 
 }
 
