@@ -22,13 +22,6 @@ function setup(canvas, ctx) {
     r.setFillStyle("Blue");
     r.showBounds();
     r.fill = true;
-<<<<<<< HEAD
-
-    console.log(player.map);
-    tm = new TileMap(ctx, player.map, 50, 10, 10);
-
-=======
->>>>>>> 5693876fdefb25d28181cb65aee86ceba1da4be5
 }
 
 function update(canvas, ctx) {
