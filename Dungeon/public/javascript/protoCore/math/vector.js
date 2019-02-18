@@ -10,7 +10,7 @@ export default class Vector {
      * @param { Number } x The starting x component of the vector
      * @param { Number } y The starting y component of the vector
      */
-    constructor(x, y) {
+    constructor(x=0, y=0) {
         this.x = x;
         this.y = y;
     }

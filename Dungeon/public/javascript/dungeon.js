@@ -1,5 +1,6 @@
 import protoCore from "./protoCore/protoCore.js";
 import Rectangle from "./protoCore/canvas/rectangle.js";
+import Player from "./player.js";
 
 let options = {
     setup: setup,
@@ -9,10 +10,12 @@ let options = {
 };
 
 let r;
-let socket;
-
+let player;
 function setup(canvas, ctx){
-    socket = io();
+
+    //player object init
+    player = new Player(io({reconnection: false}));
+
     r = new Rectangle(ctx, -100,100,100,100);
     r.setAnchor(50,50);
     r.setFillStyle("Blue");
@@ -29,12 +32,6 @@ function update(canvas, ctx) {
         r.position.x += 2.2;
 
     }
-
-
-}
-
-function keyupdate(){
-
 }
 
 function draw(ctx, canvas){
@@ -44,3 +41,5 @@ function draw(ctx, canvas){
 }
 
 let p = new protoCore(options);
+
+
