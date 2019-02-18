@@ -1,13 +1,19 @@
 import Vector from "../math/vector.js";
+import SpriteChild from "./SpriteChild.js";
 
 /**
  * @author Mason Timmerman
- * Class that holds Renderable children sprites that are rendered on an HTML 5 Canvas
+ * Class that holds children sprites that are rendered on an HTML 5 Canvas
  * @property { Vector } position represents the horizontal and vertical position of the object.
- * @property { Renderable } children is the array of children held by the parent that are rendered to the Canvas.
+ * @property { SpriteChild } children the array of children contained in this parent.
  *
  */
 export default class SpriteParent {
+    /**
+     * Creates a new instance of the SpriteParent class. 
+     * @param { Number } givenX horizontal position of this SpriteParent.
+     * @param { Number } givenY vertical position of this SpriteParent.
+     */
     constructor(givenX = 0, givenY = 0) {
         //position
         this.position = new Vector(givenX, givenY);
@@ -16,9 +22,13 @@ export default class SpriteParent {
         this.children = [];
     }
 
-    addChild(givenChild) {
-        givenChild.position = Vector.sub(this.position, givenChild.position);
-        this.children.push(givenChild);
+    /**
+     * Adds a child to the children array.
+     * @param { Renderable } givenSprite the sprite to be added.
+     */
+    addChild(givenSprite) {
+        let p = Vector.sub(this.position, givenSprite.position);
+        this.children.push(new SpriteChild(givenSprite, p));
     }
 
     /**
@@ -72,10 +82,15 @@ export default class SpriteParent {
         this.translateChildren(0, translateY);
     }
 
+    /**
+     * Iterates through the children array and translates them all.
+     * @param { Number } translateX the horizontal translation distance.
+     * @param { Number } translateY the vertical translation distance.
+     */
     translateChildren(translateX, translateY) {
         for(let i = 0; i < this.children.length; i++) {
-            this.children[i].position.x += translateX;
-            this.children[i].position.y += translateY;
+            this.children[i].sprite.position.x += translateX;
+            this.children[i].sprite.position.y += translateY;
         }
     }
 }
