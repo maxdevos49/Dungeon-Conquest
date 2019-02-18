@@ -23,7 +23,6 @@ export default class ArrayUtil {
 
         if (typeof max !== "number")
             throw new TypeError("length must be a number.");
-        // console.log(length);
         return Array(length)
             .fill()
             .map(() => Math.round(Math.random() * max));

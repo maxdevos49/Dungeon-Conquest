@@ -1,7 +1,8 @@
 import protoCore from "./protoCore/protoCore.js";
 import Rectangle from "./protoCore/canvas/rectangle.js";
-import SpriteParent from "./protoCore/canvas/SpriteParent.js";
+// import SpriteParent from "./protoCore/canvas/SpriteParent.js";
 import TileMap from "./protoCore/canvas/TileMap.js";
+import Player from "./player.js";
 
 let options = {
     setup: setup,
@@ -11,32 +12,21 @@ let options = {
 };
 
 let r;
-let socket;
+let player;
 let tm;
 
-//for testing ------------
-function generate(width, height, max) {
-    let result = []
-    for (let i = 0; i < height; i++) {
-        result[i] = Array(width)
-            .fill()
-            .map(() => Math.round(Math.random() * max));
-    }
-    return result;
-}
-//------------------------
-
-
-
 function setup(canvas, ctx){
-    socket = io();
+
+    //player object init
+    player = new Player(io({reconnection: false}));
+
     r = new Rectangle(ctx, -100,100,100,100);
     r.setAnchor(50,50);
     r.setFillStyle("Blue");
     r.showBounds();
     r.fill = true;
 
-    tm = new TileMap(ctx, generate(10, 10, 10), 100, 10, 10);
+    tm = new TileMap(ctx, player.map, 50, 100, 100);
 
 }
 
@@ -51,10 +41,6 @@ function update(canvas, ctx) {
     tm.mapParent.translateX(1);
 }
 
-function keyupdate(){
-
-}
-
 function draw(ctx, canvas){
     
     ctx.clearRect(0,0, this.canvasWidth, this.canvasHeight);
@@ -65,3 +51,5 @@ function draw(ctx, canvas){
 }
 
 let p = new protoCore(options);
+
+
