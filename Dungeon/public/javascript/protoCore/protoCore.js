@@ -30,6 +30,8 @@ export default class protoCore {
         this._setup = givenOptions.setup;
         this._update = givenOptions.update;
         this._draw = givenOptions.draw;
+        this._keyDown = givenOptions.keyDown || false;
+        this._keyUp = givenOptions.keyUp || false;
 
         //Animation settings
         this._framerate = givenOptions.framerate || 60;
@@ -41,7 +43,6 @@ export default class protoCore {
         this._setup(this._canvas, this._context);
 
         if (this.autoStart) {
-            
             this.start();
         }
     }
@@ -60,17 +61,27 @@ export default class protoCore {
             trigger.addEventListener("click", () => this.fullScreen());
         }
 
-        this.keyListener = window.addEventListener("keydown", e => {
-            switch (e.keyCode) {
-                case 70:
-                    this.fullScreen();
-                    break;
-                case 82:
-                    this.reset();
-                    break;
-                default:
-                    console.log(e.keyCode);
-                    break;
+        this.keyDownListener = window.addEventListener("keydown", e => {
+            if (this._keyDown) {
+                this._keyDown(e);
+            } else {
+                e.preventDefault();
+                switch (e.keyCode) {
+                    case 70:
+                        this.fullScreen();
+                        break;
+                    case 82:
+                        this.reset();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+        this.keyUpListener = window.addEventListener("keyup", e => {
+            if (this._keyDown) {
+                this._keyUp(e);
             }
         });
     }
@@ -90,7 +101,9 @@ export default class protoCore {
                 window.webkitRequestAnimationFrame ||
                 window.msRequestAnimationFrame;
 
-            this._animationFrameId = requestAnimationFrame(now => this.loop(now));
+            this._animationFrameId = requestAnimationFrame(now =>
+                this.loop(now)
+            );
         }
     }
 
@@ -109,7 +122,8 @@ export default class protoCore {
      */
     reset() {
         this.stop();
-        // removeEventListener(this.keyListener);
+        removeEventListener(this.keyDownListener);
+        removeEventListener(this.keyUpListener);
         this._setup(this._canvas, this._context);
         this.start();
     }
@@ -122,9 +136,13 @@ export default class protoCore {
      * @api public
      */
     set framerate(value) {
-        if (typeof value !== "number") throw new TypeError("Framerate must be a number.");
+        if (typeof value !== "number")
+            throw new TypeError("Framerate must be a number.");
 
-        if (value < 0) throw new IllegalValueException("Framerate can only be set to a value between 0 and 60.");
+        if (value < 0)
+            throw new IllegalValueException(
+                "Framerate can only be set to a value between 0 and 60."
+            );
 
         this._framerate = value;
         this._rate = 100 / this._framerate;

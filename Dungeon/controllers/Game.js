@@ -130,6 +130,7 @@ class Client {
      */
     constructor(socket, givenX = 10, givenY = 10) {
         this.id = socket.id;
+        this.direction = 0;
         this.position = { x: givenX, y: givenY };
         this.health = 100;
         this.stamina = 100;
@@ -141,6 +142,7 @@ class Client {
     toObject() {
         return {
             id: this.id,
+            direction: this.direction,
             position: { x: this.position.x, y: this.position.y },
             health: this.health,
             stamina: this.stamina

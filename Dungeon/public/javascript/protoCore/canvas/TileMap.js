@@ -35,7 +35,7 @@ export default class TileMap {
             let temp = [];
             for (let j = 0; j < givenWidth; j++) {
                 temp[j] = new Rectangle(context, j * tileSize, i * tileSize, tileSize, tileSize);
-                temp[j].fillStyle = `rgb(${this.map[i][j] * 25}, ${this.map[i][j] * 25}, ${this.map[i][j] * 25})`;
+                temp[j].setFillStyle(`rgb(${this.map[i][j] * 25}, ${this.map[i][j] * 25}, ${this.map[i][j] * 25})`);
                 temp[j].fill = true;
                 this.mapParent.addChild(temp[j]);
             }
