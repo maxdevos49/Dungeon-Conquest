@@ -38,10 +38,10 @@ export default class protoCore {
         this.autoStart = givenOptions.autoStart || true;
         this._interval = null;
 
-        //Call setup to take initial inputs
         this._setup(this._canvas, this._context);
 
         if (this.autoStart) {
+            
             this.start();
         }
     }

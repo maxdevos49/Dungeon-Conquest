@@ -1,20 +1,23 @@
 import Vector from "./protoCore/math/vector.js";
 
 export default class Player {
-    constructor(socket) {
+    constructor(socket, givenCallback) {
         this.socket = socket;
         this.id = "";
         this.player = new Vector();
         this.map = [];
         this.connectedClients = [];
+        this.callback = givenCallback;
         this.sockets();
     }
 
     sockets() {
-        this.socket.on("load", function(data) {
+        this.socket.on("load", data => {
             this.player = data.player;
             this.map = data.map;
             this.connectedClients = data.connectedClients;
+            console.log("Test ");
+            this.callback();
         });
 
         this.socket.on("playerDisconnect", id => {

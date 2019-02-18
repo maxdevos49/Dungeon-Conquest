@@ -8,26 +8,20 @@ let options = {
     setup: setup,
     update: update,
     draw: draw,
+    // autoStart: false,
     framerate: 60
 };
 
 let r;
-let player;
-let tm;
+let player, tm, p;
 
-function setup(canvas, ctx){
-
-    //player object init
-    player = new Player(io({reconnection: false}));
-
-    r = new Rectangle(ctx, -100,100,100,100);
-    r.setAnchor(50,50);
+function setup(canvas, ctx) {
+    tm = new TileMap(ctx, player.map, 50, 100, 100);
+    r = new Rectangle(ctx, -100, 100, 100, 100);
+    r.setAnchor(50, 50);
     r.setFillStyle("Blue");
     r.showBounds();
     r.fill = true;
-
-    tm = new TileMap(ctx, player.map, 50, 100, 100);
-
 }
 
 function update(canvas, ctx) {
@@ -38,18 +32,18 @@ function update(canvas, ctx) {
         r.position.x += 2.2;
     }
 
-    tm.mapParent.translateX(1);
+    tm.mapParent.translateX(3);
 }
 
-function draw(ctx, canvas){
-    
-    ctx.clearRect(0,0, this.canvasWidth, this.canvasHeight);
+function draw(ctx, canvas) {
+    ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     tm.draw();
 
     r.draw();
-
 }
 
-let p = new protoCore(options);
 
 
+player = new Player(io({ reconnection: false }), function() {
+    p = new protoCore(options);
+});
